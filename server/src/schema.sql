@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS goals;
+DROP TABLE IF EXISTS study_sessions;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users(
 
     id SERIAL PRIMARY KEY,
@@ -5,4 +9,25 @@ CREATE TABLE users(
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE study_sessions(
+
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    subject TEXT NOT NULL,
+    duration_hours DECIMAL(6,2) NOT NULL,
+    study_date DATE NOT NULL,
+    notes  TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+
+);
+
+CREATE TABLE goals (
+    
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    hours_per_week DECIMAL(6,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+
 );
